@@ -71,7 +71,9 @@ function ResultCard({ detected, match }) {
       <div className={`text-sm font-medium px-4 py-2 rounded-xl ${matchType === 'exact' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
         {matchType === 'exact'
           ? `✓ Brand identified: "${detected.brandDetected}"`
-          : `~ No brand detected — showing closest match for "${detected.productType}"`}
+          : detected.brandDetected
+          ? `~ "${detected.brandDetected}" is not yet in our database — showing closest match for "${detected.productType}"`
+          : `~ No brand visible in photo — showing closest match for "${detected.productType}"`}
       </div>
 
       {/* Main card */}
