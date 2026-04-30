@@ -75,13 +75,17 @@ Focus on: brand logos, labels, text on packaging, and the type of food. If no fo
     });
 
     const raw = message.content[0].text.trim();
-    detected = JSON.parse(raw);
+    // Strip markdown code fences if Claude included them
+    const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+    detected = JSON.parse(cleaned);
   } catch (err) {
-    console.error('Claude API error:', err);
-    return NextResponse.json(
-      { error: 'AI analysis failed. Please try a clearer photo.' },
-      { status: 502 }
-    );
+    console.error('Claude API error:', err?.message ?? err);
+    const msg = err?.status === 401
+      ? 'Invalid API key. Check your ANTHROPIC_API_KEY in Vercel settings.'
+      : err?.status === 429
+      ? 'Too many requests. Please wait a moment and try again.'
+      : 'AI analysis failed. Please try again.';
+    return NextResponse.json({ error: msg }, { status: 502 });
   }
 
   if (detected.category === 'unknown') {
