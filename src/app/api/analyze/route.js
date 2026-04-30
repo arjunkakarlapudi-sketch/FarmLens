@@ -1,16 +1,15 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 import {
   findCompanyByBrand,
   findCompanyByProductType,
 } from '@/data/companies';
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+export const maxDuration = 30; // give Vercel 30s before timeout
 
 export async function POST(request) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
-      { error: 'ANTHROPIC_API_KEY is not configured. See setup instructions.' },
+      { error: 'ANTHROPIC_API_KEY is not configured.' },
       { status: 500 }
     );
   }
@@ -27,7 +26,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'No image provided.' }, { status: 400 });
   }
 
-  // Parse data URL  →  base64 + mediaType
+  // Parse data URL → base64 + mediaType
   const match = image.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
   if (!match) {
     return NextResponse.json({ error: 'Invalid image format.' }, { status: 400 });
@@ -35,30 +34,31 @@ export async function POST(request) {
   const mediaType = match[1];
   const base64Data = match[2];
 
-  // Call Claude Vision
+  // Call Anthropic API directly via fetch
   let detected;
   try {
-    const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 512,
-      system: [
-        {
-          type: 'text',
-          text: 'You are a food product analyzer for FarmLens, an agricultural transparency app. You analyze images of food products to identify what the product is and any visible brand names. Always return valid JSON only — no markdown, no code blocks, no other text.',
-          cache_control: { type: 'ephemeral' },
-        },
-      ],
-      messages: [
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'image',
-              source: { type: 'base64', media_type: mediaType, data: base64Data },
-            },
-            {
-              type: 'text',
-              text: `Analyze this image and return ONLY a JSON object:
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-3-5-sonnet-20241022',
+        max_tokens: 512,
+        system: 'You are a food product analyzer for FarmLens, an agricultural transparency app. You analyze images of food products to identify what the product is and any visible brand names. Always return valid JSON only — no markdown, no code blocks, no other text.',
+        messages: [
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'image',
+                source: { type: 'base64', media_type: mediaType, data: base64Data },
+              },
+              {
+                type: 'text',
+                text: `Analyze this image and return ONLY a JSON object:
 {
   "productType": "specific food product (e.g. 'chicken breast', 'strawberries', 'ground beef', 'bagged salad')",
   "category": "meat" or "produce" or "unknown",
@@ -68,24 +68,35 @@ export async function POST(request) {
 }
 
 Focus on: brand logos, labels, text on packaging, and the type of food. If no food is visible, use category "unknown".`,
-            },
-          ],
-        },
-      ],
+              },
+            ],
+          },
+        ],
+      }),
     });
 
-    const raw = message.content[0].text.trim();
-    // Strip markdown code fences if Claude included them
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('Anthropic API error:', response.status, errText);
+      const msg = response.status === 401
+        ? 'Invalid API key. Check your ANTHROPIC_API_KEY in Vercel settings.'
+        : response.status === 429
+        ? 'Too many requests. Please wait a moment and try again.'
+        : `Anthropic API error ${response.status}`;
+      return NextResponse.json({ error: msg }, { status: 502 });
+    }
+
+    const data = await response.json();
+    const raw = data.content[0].text.trim();
+    // Strip markdown code fences if present
     const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
     detected = JSON.parse(cleaned);
   } catch (err) {
-    console.error('Claude API error:', err?.message ?? err);
-    const msg = err?.status === 401
-      ? 'Invalid API key. Check your ANTHROPIC_API_KEY in Vercel settings.'
-      : err?.status === 429
-      ? 'Too many requests. Please wait a moment and try again.'
-      : 'AI analysis failed. Please try again.';
-    return NextResponse.json({ error: msg }, { status: 502 });
+    console.error('Analysis error:', err?.message ?? err);
+    return NextResponse.json(
+      { error: 'AI analysis failed. Please try again.' },
+      { status: 502 }
+    );
   }
 
   if (detected.category === 'unknown') {
