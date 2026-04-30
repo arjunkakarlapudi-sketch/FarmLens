@@ -78,12 +78,7 @@ Focus on: brand logos, labels, text on packaging, and the type of food. If no fo
     if (!response.ok) {
       const errText = await response.text();
       console.error('Anthropic API error:', response.status, errText);
-      const msg = response.status === 401
-        ? 'Invalid API key. Check your ANTHROPIC_API_KEY in Vercel settings.'
-        : response.status === 429
-        ? 'Too many requests. Please wait a moment and try again.'
-        : `Anthropic API error ${response.status}`;
-      return NextResponse.json({ error: msg }, { status: 502 });
+      return NextResponse.json({ error: `Anthropic ${response.status}: ${errText}` }, { status: 502 });
     }
 
     const data = await response.json();
