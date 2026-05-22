@@ -200,9 +200,7 @@ export default function MethodologyPage() {
           <section>
             <h2 className="text-lg font-black text-slate-900 uppercase tracking-wide mb-3">Appeals</h2>
             <p className="text-slate-600 leading-relaxed">
-              If a brand or farm believes their rating is inaccurate, they can submit a written appeal to{' '}
-              <a href="mailto:appeals@farmlens.app" className="text-emerald-700 font-semibold hover:underline">appeals@farmlens.app</a>.
-              {' '}We commit to reviewing every appeal within 14 days. Appeals must include specific evidence — documentation, certifications, or sources — supporting the requested change. We do not change ratings based on opinion or pressure alone.
+              If a brand or farm believes their rating is inaccurate, they can submit a written appeal to us. We commit to reviewing every appeal within 14 days. Appeals must include specific evidence — documentation, certifications, or sources — supporting the requested change. We do not change ratings based on opinion or pressure alone.
             </p>
           </section>
 
