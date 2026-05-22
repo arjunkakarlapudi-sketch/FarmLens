@@ -211,11 +211,16 @@ export default function ScanPage() {
             <span className="text-2xl">🌿</span>
             <span className="font-black text-emerald-700 text-lg tracking-tight">FarmLens</span>
           </Link>
-          {(preview || result) && (
-            <button onClick={handleReset} className="text-sm text-slate-500 hover:text-slate-800 font-medium transition-colors">
-              ← New scan
-            </button>
-          )}
+          <div className="flex items-center gap-4">
+            <Link href="/methodology" className="text-sm font-semibold text-slate-500 hover:text-emerald-700 transition-colors">
+              Methodology
+            </Link>
+            {(preview || result) && (
+              <button onClick={handleReset} className="text-sm text-slate-500 hover:text-slate-800 font-medium transition-colors">
+                ← New scan
+              </button>
+            )}
+          </div>
         </div>
       </header>
 

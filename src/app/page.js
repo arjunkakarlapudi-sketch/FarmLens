@@ -49,12 +49,17 @@ export default function HomePage() {
             <span className="text-2xl">🌿</span>
             <span className="font-black text-emerald-700 text-xl tracking-tight">FarmLens</span>
           </div>
-          <Link
-            href="/scan"
-            className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors"
-          >
-            Start Scanning →
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/methodology" className="text-sm font-semibold text-slate-500 hover:text-emerald-700 transition-colors">
+              Methodology
+            </Link>
+            <Link
+              href="/scan"
+              className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors"
+            >
+              Start Scanning →
+            </Link>
+          </div>
         </div>
       </nav>
 
