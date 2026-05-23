@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { companies, gradeColors } from '@/data/companies';
+import Footer from '@/components/Footer';
 
 function GradePill({ grade }) {
   const colors = gradeColors[grade];
@@ -53,6 +54,9 @@ export default function HomePage() {
             <Link href="/methodology" className="text-sm font-semibold text-slate-500 hover:text-emerald-700 transition-colors">
               Methodology
             </Link>
+            <Link href="/contact" className="text-sm font-semibold text-slate-500 hover:text-emerald-700 transition-colors">
+              Contact
+            </Link>
             <Link
               href="/scan"
               className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors"
@@ -75,7 +79,7 @@ export default function HomePage() {
             <span className="text-emerald-400">Before you buy it.</span>
           </h1>
           <p className="text-emerald-100 text-lg md:text-xl mt-6 max-w-xl mx-auto leading-relaxed">
-            FarmLens uses AI to give you instant A–F grades on the farms and brands behind every product you pick up — based on food safety, labor practices, environment, and animal welfare.
+            FarmLens rates food brands using public records — USDA, FDA, and independent certifications — so you can see what's really behind the products you buy.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -203,15 +207,7 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-100 bg-white">
-        <div className="max-w-3xl mx-auto px-4 py-6 text-center">
-          <p className="text-slate-400 text-xs leading-relaxed max-w-xl mx-auto">
-            Research compiled from FDA, CDC, USDA FSIS, OSHA, EPA, DOJ, EWG, Food &amp; Water Watch, ProPublica, the New York Times, The Guardian, Reuters, and more. Grades reflect documented public records as of April 2026. FarmLens is not affiliated with any rated company.
-          </p>
-          <p className="text-slate-300 text-xs mt-3">© 2026 FarmLens</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

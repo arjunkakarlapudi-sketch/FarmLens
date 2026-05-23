@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'Methodology — FarmLens',
@@ -7,7 +8,7 @@ export const metadata = {
 
 export default function MethodologyPage() {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
       <nav className="bg-white border-b border-slate-100 sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -216,6 +217,7 @@ export default function MethodologyPage() {
 
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

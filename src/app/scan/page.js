@@ -4,6 +4,81 @@ import { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { gradeColors, gradeDescriptions } from '@/data/companies';
 
+// ─── Brand Not Found Form ────────────────────────────────────────────────────
+
+function BrandRequestForm({ brandName }) {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/request-brand', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ brandName, email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+      setStatus('success');
+      setMessage(data.message);
+    } catch (err) {
+      setStatus('error');
+      setMessage(err.message);
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="bg-emerald-50 border border-emerald-100 rounded-2xl px-5 py-4 text-emerald-700 text-sm text-center">
+        <div className="text-2xl mb-2">✓</div>
+        <p className="font-semibold">{message}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-amber-50 border-b border-amber-100 px-5 py-4">
+        <p className="text-amber-800 font-semibold text-sm">
+          {brandName
+            ? `"${brandName}" isn't in our database yet.`
+            : "This brand isn't in our database yet."}
+        </p>
+        <p className="text-amber-700 text-xs mt-0.5">Want us to research and rate it?</p>
+      </div>
+      <form onSubmit={handleSubmit} className="px-5 py-4 space-y-3">
+        <p className="text-slate-600 text-sm">
+          Enter your email and we'll notify you when{' '}
+          <span className="font-semibold">{brandName || 'this brand'}</span> is rated.
+        </p>
+        <div className="flex gap-2">
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="your@email.com"
+            className="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+          />
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-colors disabled:opacity-60 shrink-0"
+          >
+            {status === 'loading' ? '...' : 'Notify Me'}
+          </button>
+        </div>
+        {status === 'error' && (
+          <p className="text-red-600 text-xs">{message}</p>
+        )}
+      </form>
+    </div>
+  );
+}
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function gradeLabel(grade) {
@@ -304,9 +379,7 @@ export default function ScanPage() {
             {result.match ? (
               <ResultCard detected={result.detected} match={result.match} />
             ) : (
-              <div className="bg-amber-50 border border-amber-100 rounded-2xl px-5 py-4 text-amber-700 text-sm">
-                {result.message}
-              </div>
+              <BrandRequestForm brandName={result.detected?.brandDetected} />
             )}
           </div>
         )}
