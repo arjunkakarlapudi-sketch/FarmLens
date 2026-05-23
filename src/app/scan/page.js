@@ -381,6 +381,11 @@ export default function ScanPage() {
             ) : (
               <BrandRequestForm brandName={result.detected?.brandDetected} />
             )}
+
+            {/* Show brand request form when a brand was detected but not in DB */}
+            {result.match && result.match.type === 'closest' && result.detected?.brandDetected && (
+              <BrandRequestForm brandName={result.detected.brandDetected} />
+            )}
           </div>
         )}
       </main>
