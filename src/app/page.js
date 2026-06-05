@@ -30,30 +30,34 @@ function WaitlistForm() {
     return (
       <div className="text-center py-4">
         <div className="text-3xl mb-2">✓</div>
-        <p className="text-emerald-700 font-bold">You're on the list.</p>
-        <p className="text-slate-500 text-sm mt-1">We'll email you when the full product launches.</p>
+        <p className="text-white font-bold">You're on the list.</p>
+        <p className="text-emerald-300 text-sm mt-1">We'll email you when the full product launches.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        className="flex-1 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
-      />
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors disabled:opacity-60 shrink-0"
-      >
-        {status === 'loading' ? 'Joining…' : 'Join Waitlist'}
-      </button>
-    </form>
+    <div className="space-y-2">
+      <form onSubmit={handleSubmit} noValidate className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="your@email.com"
+          className="flex-1 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-white bg-white/10 text-white placeholder-emerald-300"
+        />
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold px-6 py-3 rounded-xl text-sm transition-colors disabled:opacity-60 shrink-0"
+        >
+          {status === 'loading' ? 'Joining…' : 'Join Waitlist'}
+        </button>
+      </form>
+      {status === 'error' && (
+        <p className="text-red-300 text-xs text-center">Something went wrong — please try again.</p>
+      )}
+    </div>
   );
 }
 
