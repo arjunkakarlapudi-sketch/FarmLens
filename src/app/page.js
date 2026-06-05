@@ -177,13 +177,24 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Waitlist — above How It Works */}
+      <section id="waitlist" className="bg-emerald-900 text-white">
+        <div className="max-w-3xl mx-auto px-4 py-14 text-center">
+          <h2 className="text-2xl font-black mb-2">Get notified when the real thing comes out.</h2>
+          <p className="text-emerald-300 text-sm mb-8 max-w-md mx-auto">
+            This is an early demo. The full FarmLens — with more brands, local farms, and direct verification — is in development. Leave your email and we'll tell you when it's ready.
+          </p>
+          <WaitlistForm />
+        </div>
+      </section>
+
       {/* How it works */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <h2 className="text-2xl font-black text-slate-900 text-center mb-10">How It Works</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { icon: '📷', step: '1', title: 'Take a Photo', desc: 'Snap the product, its packaging, or the brand label. The more of the label you capture, the more accurate the match.' },
-            { icon: '🤖', step: '2', title: 'AI Analyzes It', desc: 'Claude AI identifies the product type and any visible brand. It searches our database of 36 rated companies.' },
+            { icon: '🤖', step: '2', title: 'AI Analyzes It', desc: `Our AI identifies the product type and any visible brand. It searches our database of ${companies.length} rated companies.` },
             { icon: '📊', step: '3', title: 'Get Your Grade', desc: 'See an A–F letter grade with a full breakdown: food safety, labor, environment, animal welfare, and transparency.' },
           ].map((item) => (
             <div key={item.step} className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
@@ -313,17 +324,6 @@ export default function HomePage() {
         >
           📷 Scan Now — It's Free
         </Link>
-      </section>
-
-      {/* Waitlist */}
-      <section id="waitlist" className="bg-emerald-900 text-white">
-        <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-          <h2 className="text-2xl font-black mb-2">Get notified when the real thing comes out.</h2>
-          <p className="text-emerald-300 text-sm mb-8 max-w-md mx-auto">
-            This is an early demo. The full FarmLens — with more brands, local farms, and direct verification — is in development. Leave your email and we'll tell you when it's ready.
-          </p>
-          <WaitlistForm />
-        </div>
       </section>
 
       <Footer />
