@@ -1,6 +1,61 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import { companies, gradeColors } from '@/data/companies';
 import Footer from '@/components/Footer';
+
+function WaitlistForm() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="text-center py-4">
+        <div className="text-3xl mb-2">✓</div>
+        <p className="text-emerald-700 font-bold">You're on the list.</p>
+        <p className="text-slate-500 text-sm mt-1">We'll email you when the full product launches.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="your@email.com"
+        className="flex-1 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
+      />
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors disabled:opacity-60 shrink-0"
+      >
+        {status === 'loading' ? 'Joining…' : 'Join Waitlist'}
+      </button>
+    </form>
+  );
+}
 
 function GradePill({ grade }) {
   const colors = gradeColors[grade];
@@ -43,6 +98,14 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {/* MVP banner */}
+      <div className="bg-amber-50 border-b border-amber-200 text-center px-4 py-2">
+        <p className="text-amber-800 text-xs font-medium">
+          🚧 This is an early demo — the full FarmLens product is in development.{' '}
+          <a href="#waitlist" className="underline font-bold hover:text-amber-900">Join the waitlist</a> to be notified when it launches.
+        </p>
+      </div>
+
       {/* Nav */}
       <nav className="bg-white border-b border-slate-100">
         <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -195,6 +258,51 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Label Decoder */}
+      <section className="max-w-3xl mx-auto px-4 py-16">
+        <h2 className="text-2xl font-black text-slate-900 text-center mb-2">Label Decoder</h2>
+        <p className="text-slate-500 text-center text-sm mb-8">What these common claims legally mean — and what they don't.</p>
+        <div className="space-y-4">
+          {[
+            {
+              label: '"Natural"',
+              verdict: 'Sounds meaningful. Isn\'t.',
+              verdictColor: 'bg-red-50 text-red-700',
+              content: 'On meat and poultry, USDA regulates "natural" to mean only that the product contains no artificial ingredients or added color and is minimally processed. It says nothing about how the animal was raised, what it was fed, or whether it received antibiotics or hormones. This is one of the clearest examples of a label that sounds meaningful but legally guarantees almost nothing about the animal\'s life or the farm\'s practices.',
+            },
+            {
+              label: '"Grass-Fed" vs. "Grass-Finished"',
+              verdict: 'Depends on the exact wording.',
+              verdictColor: 'bg-amber-50 text-amber-700',
+              content: '"Grass-fed" alone does not guarantee the animal ate only grass its entire life. Many cattle marketed as grass-fed are grain-finished in their final months — which changes the nutritional profile and the farming model. The claim that matches what most people assume "grass-fed" means is "100% grass-fed" or "grass-finished." If a label says "grass-fed" without "finished" or "100%," the animal may have spent its last months in a feedlot.',
+            },
+            {
+              label: '"No Hormones Added" / "Raised Without Hormones"',
+              verdict: 'Meaningful on beef. Theater on chicken and pork.',
+              verdictColor: 'bg-amber-50 text-amber-700',
+              content: 'USDA already prohibits the use of hormones in raising pigs and chickens — so "no hormones added" on poultry or pork is marketing a legal baseline as though it\'s a special commitment. It means nothing beyond what every product in that category already is by law. On beef, it is a real distinction: growth hormones are permitted in cattle, so a verified "no hormones" claim on beef reflects an actual choice the producer made.',
+            },
+            {
+              label: '"No Antibiotics" / "Raised Without Antibiotics"',
+              verdict: 'Meaningful only if a certifier backs it.',
+              verdictColor: 'bg-amber-50 text-amber-700',
+              content: 'USDA\'s officially approved claims are "raised without antibiotics" and "no antibiotics ever." The phrase "antibiotic-free" is not an officially approved USDA label claim and is sometimes used loosely. Without third-party verification — such as USDA Process Verified, Certified Humane, or Global Animal Partnership — there is no independent audit confirming the claim. When you see this label, the question to ask is: who verified it?',
+            },
+          ].map((item) => (
+            <div key={item.label} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+              <div className="px-5 py-4 border-b border-slate-50 flex flex-col sm:flex-row sm:items-center gap-2 justify-between">
+                <h3 className="font-black text-slate-900">{item.label}</h3>
+                <span className={`${item.verdictColor} text-xs font-bold px-3 py-1 rounded-full shrink-0`}>{item.verdict}</span>
+              </div>
+              <div className="px-5 py-4">
+                <p className="text-slate-600 text-sm leading-relaxed">{item.content}</p>
+              </div>
+            </div>
+          ))}
+          <p className="text-xs text-slate-400 text-center pt-2">Sources: USDA Food Safety and Inspection Service (FSIS), USDA Agricultural Marketing Service (AMS)</p>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="max-w-3xl mx-auto px-4 py-16 text-center">
         <h2 className="text-3xl font-black text-slate-900 mb-3">Ready to know what's in your food?</h2>
@@ -205,6 +313,17 @@ export default function HomePage() {
         >
           📷 Scan Now — It's Free
         </Link>
+      </section>
+
+      {/* Waitlist */}
+      <section id="waitlist" className="bg-emerald-900 text-white">
+        <div className="max-w-3xl mx-auto px-4 py-16 text-center">
+          <h2 className="text-2xl font-black mb-2">Get notified when the real thing comes out.</h2>
+          <p className="text-emerald-300 text-sm mb-8 max-w-md mx-auto">
+            This is an early demo. The full FarmLens — with more brands, local farms, and direct verification — is in development. Leave your email and we'll tell you when it's ready.
+          </p>
+          <WaitlistForm />
+        </div>
       </section>
 
       <Footer />
