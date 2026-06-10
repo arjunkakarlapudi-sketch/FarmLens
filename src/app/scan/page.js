@@ -170,6 +170,21 @@ function ResultCard({ detected, match }) {
             {gradeDescriptions[company.overallGrade]}
           </div>
 
+          {/* Health warning — only shown for brands with documented consumer risks */}
+          {company.healthWarnings?.length > 0 && (
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <p className="text-xs font-black text-red-700 uppercase tracking-wide mb-2">Health & Safety Concerns</p>
+              <ul className="space-y-1.5">
+                {company.healthWarnings.map((w, i) => (
+                  <li key={i} className="flex gap-2 text-sm text-red-800">
+                    <span className="shrink-0 mt-0.5">⚠</span>
+                    <span>{w}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Summary */}
           <p className="text-slate-600 text-sm leading-relaxed">{company.summary}</p>
 

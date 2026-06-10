@@ -112,6 +112,11 @@ export const companies = [
     ],
     summary: "One of the world's largest meat producers with a documented pattern of food safety recalls, extreme labor violations including child labor at supplier plants, and severe environmental damage to US waterways.",
     consumerAdvice: "Strongly consider alternatives. Bell & Evans, Niman Ranch, or Perdue Organics are meaningfully better options.",
+    healthWarnings: [
+      "2022: Recalled 8.4 million lbs of chicken for Listeria contamination — one of the largest poultry recalls in recent years",
+      "Persistent Salmonella concerns in USDA testing across multiple facilities",
+      "Supplier plants employed migrant children as young as 13 in hazardous overnight jobs (NYT 2023)",
+    ],
   },
 
   {
@@ -139,6 +144,10 @@ export const companies = [
     ],
     summary: "A Brazilian-owned conglomerate with the largest DOJ bribery fine in history, Amazon deforestation in its supply chain, and a COVID outbreak that killed 6 workers at its Greeley plant.",
     consumerAdvice: "Avoid. JBS's criminal history and environmental record are disqualifying. Look for Creekstone Farms, Niman Ranch, or Heritage Foods USA instead.",
+    healthWarnings: [
+      "2018: Recalled 6.9 million lbs of beef for E. coli O157:H7 contamination — one of the largest beef recalls in years",
+      "Multiple USDA food safety violations documented across JBS processing plants",
+    ],
   },
 
   {
@@ -166,6 +175,10 @@ export const companies = [
     ],
     summary: "The world's largest private company with a catastrophic turkey recall, Amazon deforestation across its supply chain, and COVID deaths at its Canadian processing plant — with zero public accountability requirements.",
     consumerAdvice: "Avoid. The private structure means no public accountability. Choose Niman Ranch or Bell & Evans.",
+    healthWarnings: [
+      "2011: Recalled 36 million lbs of ground turkey for Salmonella — 1 person killed, 79 sickened across 26 states",
+      "Antibiotic use in supply chain contributes to antibiotic-resistant bacteria in food products",
+    ],
   },
 
   {
@@ -193,6 +206,10 @@ export const companies = [
     ],
     summary: "The world's largest pork producer, owned by a Chinese conglomerate, with massive environmental settlements, broken animal welfare pledges, COVID deaths, and a $13,494 fine for killing 4 workers.",
     consumerAdvice: "Avoid. Heritage Foods USA or Niman Ranch are far better alternatives for pork.",
+    healthWarnings: [
+      "Routine antibiotic overuse in Smithfield hog operations is linked to increased antibiotic-resistant bacteria risk in pork",
+      "Hog waste lagoon pollution has been documented to affect water and air quality in surrounding communities",
+    ],
   },
 
   {
@@ -220,6 +237,11 @@ export const companies = [
     ],
     summary: "A premium deli brand whose 2024 Listeria outbreak killed 9 people and hospitalized 57+ across 13 states — with 69 prior FSIS violations that went unenforced. Nine deaths from a brand consumers paid a premium to trust.",
     consumerAdvice: "Avoid. The 2024 deaths are disqualifying. Applegate Farms or Niman Ranch deli meats are better choices.",
+    healthWarnings: [
+      "2024: Listeria outbreak killed 9 people and hospitalized 57 across 13 states — the deadliest US deli meat outbreak in recent history",
+      "USDA documented 69+ sanitation violations at the outbreak plant in the 12 months before the deaths",
+      "~7 million lbs of deli meat recalled; the Jarratt, VA plant was permanently shut down",
+    ],
   },
 
   // ─── MEAT: D GRADES ────────────────────────────────────────────────────────
@@ -249,6 +271,10 @@ export const companies = [
     ],
     summary: "A JBS-owned chicken company with a criminal guilty plea for industry-wide price-fixing, executive indictments, and no meaningful welfare commitments.",
     consumerAdvice: "Choose Bell & Evans, Perdue Organics, or Niman Ranch instead.",
+    healthWarnings: [
+      "2020: Recalled ~211,000 lbs of fully cooked chicken for Listeria contamination",
+      "Persistently elevated Salmonella rates in USDA facility testing above industry average",
+    ],
   },
 
   {
@@ -303,6 +329,10 @@ export const companies = [
     ],
     summary: "A chicken company that fought meaningful welfare improvements harder than almost anyone in the industry, with persistent Salmonella problems and a below-average labor record.",
     consumerAdvice: "Choose Bell & Evans or Perdue Organic instead.",
+    healthWarnings: [
+      "Persistently elevated Salmonella contamination rates in USDA testing — above the industry average for chicken",
+      "Multiple USDA FSIS enforcement actions for food safety violations",
+    ],
   },
 
   {
@@ -330,6 +360,10 @@ export const companies = [
     ],
     summary: "California's largest poultry processor with one of the worst Salmonella outbreak records in recent US history — 634+ sickened across 29 states — and persistent food safety issues since.",
     consumerAdvice: "Choose Bell & Evans or Niman Ranch. If buying California poultry, look for Certified Humane labels.",
+    healthWarnings: [
+      "2013–2014: Multi-year Salmonella outbreak sickened 634+ people across 29 states — USDA threatened to shut down the plant",
+      "Additional Salmonella recalls in 2019 and 2022; contamination rates remain above industry average",
+    ],
   },
 
   {
@@ -716,6 +750,10 @@ export const companies = [
     ],
     summary: "A global produce giant with a Listeria outbreak that killed 2 people, decades of DBCP sterilization lawsuits, overseas deforestation, and persistent labor violations.",
     consumerAdvice: "Choose Earthbound Farm, Organicgirl, or Lakeside Organic for salads. For bananas, few good alternatives exist at scale.",
+    healthWarnings: [
+      "2022: Listeria outbreak killed 2 people and hospitalized 17 across multiple states",
+      "Decades of DBCP pesticide lawsuits — a sterilization-linked chemical used on banana farms across Latin America",
+    ],
   },
 
   {
@@ -743,6 +781,10 @@ export const companies = [
     ],
     summary: "A global produce company with Salmonella outbreaks, an EU-banned herbicide contaminating Costa Rican drinking wells, and tropical deforestation in its supply chain.",
     consumerAdvice: "Choose certified organic alternatives — Earthbound Farm or Organicgirl for salads, Jacobs Farm/Del Cabo for herbs.",
+    healthWarnings: [
+      "2018–2020: Multiple Salmonella outbreaks traced to Del Monte's fresh-cut melon packing facility",
+      "Costa Rica pineapple operations use bromacil — a herbicide banned in the EU — with documented contamination of nearby drinking water wells",
+    ],
   },
 
   {
@@ -770,6 +812,10 @@ export const companies = [
     ],
     summary: "North America's largest salad producer — responsible for the 2023 McDonald's outbreak that killed 1 person, with simultaneous sexual harassment lawsuits and wage theft investigations.",
     consumerAdvice: "Choose Earthbound Farm, Organicgirl, or Lakeside Organic for salads.",
+    healthWarnings: [
+      "2023: Salmonella outbreak linked to Taylor Farms onions killed 1 person and sickened 100+ across multiple states — traced to their Colorado Springs facility",
+      "Previously linked to 2018 and 2019 E. coli outbreaks in Salinas Valley romaine lettuce",
+    ],
   },
 
   {
@@ -797,6 +843,11 @@ export const companies = [
     ],
     summary: "The world's largest berry company with the most pesticide-laden strawberries in the US market, a Hepatitis A outbreak requiring liver transplants, and documented $8/day wages for migrant farmworkers.",
     consumerAdvice: "Buy Driscoll's Organic or choose Naturipe Organic. The conventional line has the worst pesticide record in US produce.",
+    healthWarnings: [
+      "Conventional Driscoll's strawberries are #1 on EWG's Dirty Dozen — 90%+ of samples contain pesticide residues, with some showing 20+ different pesticides detected",
+      "2022: Organic strawberries recalled for Hepatitis A — 50+ people sickened, several required liver transplants",
+      "Note: Driscoll's Organic line does not carry these pesticide concerns",
+    ],
   },
 
   {
@@ -1154,6 +1205,10 @@ export const companies = [
     ],
     summary: "Unbranded conventional berries are among the highest-risk produce items for pesticide exposure. Strawberries in particular top the EWG Dirty Dozen every year. Without a brand, there's no way to verify labor conditions or farm practices.",
     consumerAdvice: "This is one of the clearest cases where buying organic is worth it. Organic strawberries, blueberries, and raspberries have dramatically lower pesticide loads. Driscoll's Organic or Earthbound Farm are widely available branded organic options.",
+    healthWarnings: [
+      "Conventional strawberries are #1 on EWG's Dirty Dozen — over 90% of samples test positive for pesticide residues, with some showing 20+ different pesticides",
+      "Spinach is #2 on EWG's Dirty Dozen with similarly high pesticide loads — especially important to buy organic",
+    ],
   },
 
   {
@@ -1616,7 +1671,11 @@ export const companies = [
       "Minimal transparency into pesticide levels or specific farm sourcing",
     ],
     summary: "Fresh Express is the largest bagged salad brand in America but carries one of the worst food safety records in the produce category. Its 2006 E. coli spinach outbreak remains one of the deadliest in US food history, and contamination incidents have continued since.",
-    consumerAdvice: "Given the repeated contamination history, consider Taylor Farms or Earthbound Farm for bagged salads. Washing produce before eating and inspecting recall notices is especially important for this brand.",
+    consumerAdvice: "Given the repeated contamination history, consider Earthbound Farm or Organicgirl for bagged salads. Washing produce before eating and checking recalls is especially important for this brand.",
+    healthWarnings: [
+      "2006: E. coli O157:H7 outbreak in Fresh Express baby spinach killed 5 people and sickened 205 across 26 states",
+      "Multiple recalls since for Listeria and Salmonella contamination in romaine and salad kits",
+    ],
   },
 
   {

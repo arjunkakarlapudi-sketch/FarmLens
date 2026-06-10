@@ -45,7 +45,7 @@ export async function POST(request) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-opus-4-5',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 512,
         system: 'You are a food product analyzer for FarmLens, an agricultural transparency app. You analyze images of food products to identify what the product is and any visible brand names. Always return valid JSON only — no markdown, no code blocks, no other text.',
         messages: [
